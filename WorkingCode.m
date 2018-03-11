@@ -1,7 +1,7 @@
 %implementation of 1996 bs reddy and chatterjee paper
 %ref fig1 on the paper to better understand the code modules
 
-I = imread('cameraman');
+I = imread('cameraman.png');
 %change the rotation angle of the second image here 
 Orig_theta = 25
 %create the second image
@@ -17,9 +17,10 @@ J = imresize(J,a/c);
 imwrite(J,'cam_rotated.png')
 subplot(2,2,1)
 imshow(I)
+title('source img')
 subplot(2,2,2)
 imshow(J)
-
+title('target img')
 
 %fftmodule
 fftI = (fft2(I));
@@ -55,6 +56,7 @@ angle = 360 * (I_col-1)/ydim
 rec_I = imrotate(J,angle);
 subplot(2,2,3)
 imshow(rec_I)
+title('recreated')
 
 Orig_theta
 
