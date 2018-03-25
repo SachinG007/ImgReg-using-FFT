@@ -1,25 +1,24 @@
 %implementation of 1996 bs reddy and chatterjee paper
 %ref fig1 on the paper to better understand the code modules
 
-I = imread('lena.bmp');
+I = imread('cameraman');
 %change the rotation angle of the second image here 
-Orig_theta = 15
+Orig_theta = 63.5
 %create the second image
-J = imrotate(I,Orig_theta,'bicubic','loose');
-%J = imtranslate(J,[40, 40]);
+J = imrotate(I,Orig_theta,'bilinear','loose');
+J = imtranslate(J,[55, 55]);
 
 %preprocessing of the daata
 I = im2double(I);
 J = im2double(J);
 [a,b] = size(I)
-[co,do] = size(J);
+[co,do] = size(J)
 J = imresize(J,a/co);
-J = imtranslate(J,[50, 20]);
-[c,d] = size(J);
-imwrite(J,'len_rotated.png')
-subplot(2,3,1)
+[c,d] = size(J)
+imwrite(J,'cam_rotated.png')
+subplot(2,2,1)
 imshow(I)
-subplot(2,3,2)
+subplot(2,2,2)
 imshow(J)
 
 %%
@@ -52,34 +51,16 @@ ir = abs(ifft2(phase2 .* conj(phase1) ./ r0));
 [M,idx] = max(ir(:));
 [I_row, I_col] = ind2sub(size(ir),idx);
 [xdim,ydim] = size(ir);
-angle = 360 * (I_col-1)/ydim;
+angle = 360 * (I_col-1)/ydim
 
-rec_I = imrotate(J,angle,'bicubic','loose');
-subplot(2,3,3)
+rec_I = imrotate(J,angle);
+subplot(2,2,3)
 imshow(rec_I)
 
-rec_Im = imresize(rec_I,co/a);
-[g,h] = size(rec_Im);
-shift1 = (g-a)/2;
-shift2 = (h-b)/2;
+Isub = I(1:200,1:200);
+rec_Isub = rec_I(1:200,1:200);
+trans_horizontal,trans_vertical = correct_translation(Isub,rec_Isub);
 
-rec_I_matched = rec_Im(shift1:shift1+a*co/a-1,shift2:shift2+b*co/a-1);
-subplot(2,3,4)
-imshow(rec_I_matched)
-imwrite(rec_I_matched,'obtained.png')
-[aa,bb] = size(rec_I_matched);
+Orig_theta
 
-pad1 = ceil((aa-a)/2);
-pad2 = ceil((bb-b)/2);
 
-original_padded = padarray(I,[pad1,pad2]);
-subplot(2,3,6)
-imshow(original_padded)
-
-% h,v= correct_translation(I,rec_I_matched);
-% 
-% shift_I = imtranslate(rec_I_matched,[-1*h,-1*v]);
-% subplot(2,3,4)
-% imshow(shift_I)
-
-translation(original_padded)
