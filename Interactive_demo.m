@@ -13,7 +13,10 @@ J = imresize(J,[256,256]);
 subplot(2,2,2)
 imshow(J)
 %change the rotation angle of the second image here 
-Orig_theta = 37;
+prompt = 'With angle u want to distort ';
+Orig_theta = input(prompt);
+%Orig_theta = 37;
+
 %create the second image
 %J = imrotate(I,Orig_theta,'bicubic','loose');
 J = imrotate(J,Orig_theta,'bicubic','loose');

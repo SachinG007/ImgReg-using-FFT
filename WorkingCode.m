@@ -25,7 +25,7 @@ J = im2double(J);
 [a,b] = size(I)
 [co,do] = size(J)
 J = imresize(J,a/co);
-J = imtranslate(J,[20, 60]);
+J = imtranslate(J,[40, 50]);
 [c,d] = size(J);
 imwrite(J,'len_rotated.png')
 % subplot(2,3,1)
@@ -37,7 +37,7 @@ imshow(J)
 % title('Image 2 , disoriented')
 
 
-I(85:200,80:200) = 0;
+%I(85:200,80:200) = 0;
 subplot(2,3,1)
 imshow(I)
 % subplot(2,2,1)
@@ -77,6 +77,7 @@ ir = abs(ifft2(phase2 .* conj(phase1) ./ r0));
 [M,idx] = max(ir(:));
 [I_row, I_col] = ind2sub(size(ir),idx);
 [xdim,ydim] = size(ir);
+'angle'
 angle = 360 * (I_col-1)/ydim
 
 rec_I = imrotate(J,angle,'bicubic','loose');

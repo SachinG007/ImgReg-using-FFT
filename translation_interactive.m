@@ -35,13 +35,36 @@ trans_vertical = I_row - 1
 [xdim,ydim] = size(ir);
 
 [s1,s2] = size(J)
-if trans_horizontal>120
-    trans_horizontal = s2-trans_horizontal;
-    shift_I = imtranslate(J,[trans_horizontal,-1*trans_vertical]);
 
-else trans_horizontal<120
-    shift_I = imtranslate(J,[-1*trans_horizontal,-1*trans_vertical]);
+dh = -1;
+dv = -1;
+if trans_horizontal >120
+   trans_horizontal = s2 - trans_horizontal;
+   dh =1;
 end
+
+if trans_vertical >120
+   trans_vertical = s1 - trans_vertical;
+   dv =1;
+end
+
+shift_I = imtranslate(J,[dh*trans_horizontal,dv*trans_vertical]);
+
+% if trans_horizontal>120
+%     trans_horizontal = s2-trans_horizontal;
+%     shift_I = imtranslate(J,[trans_horizontal,-1*trans_vertical]);
+% 
+% else trans_horizontal<120
+%     shift_I = imtranslate(J,[-1*trans_horizontal,-1*trans_vertical]);
+% end
+
+% if vertical>120
+%     vertical = s1-trans_vertical;
+%     shift_I = imtranslate(J,[trans_horizontal,-1*trans_vertical]);
+% 
+% else trans_horizontal<120
+%     shift_I = imtranslate(J,[-1*trans_horizontal,-1*trans_vertical]);
+% end
 
 % subplot(2,3,5)
 % imshow(shift_I)
