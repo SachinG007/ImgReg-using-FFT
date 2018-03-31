@@ -1,6 +1,6 @@
 %implementation of 1996 bs reddy and chatterjee paper
 %ref fig1 on the paper to better understand the code modules
-function [trans_horizontal,trans_vertical] = translation(I)
+function [trans_horizontal,trans_vertical] = translation_interactive(I)
 
 %create the second image (translation)
 J = imread('obtained.png');
@@ -43,11 +43,11 @@ else trans_horizontal<120
     shift_I = imtranslate(J,[-1*trans_horizontal,-1*trans_vertical]);
 end
 
-subplot(2,3,5)
-imshow(shift_I)
-% subplot(2,2,3)
+% subplot(2,3,5)
 % imshow(shift_I)
-% title('result 1, Image oriented using FFT')
+subplot(2,2,3)
+imshow(shift_I)
+title('result 1, Image oriented using FFT')
 
 if size(shift_I) == size(I)
     'true'
@@ -66,9 +66,9 @@ for l=10:size(I,1)-10
 end
 
 count
-subplot(2,3,4)
+subplot(2,2,4)
 imshow(I)
-% title('result 2, information gained from image2')
+title('result 2, information gained from image2')
 
 
 

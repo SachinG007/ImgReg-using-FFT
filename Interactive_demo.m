@@ -3,20 +3,20 @@
 
 I = imread('lena.bmp');
 [a,b] = size(I);
-%J = imcrop(I);
-%[c,d] = size(J);
-% p1 = floor((a-c)/2);
-% p2 = floor((b-d)/2);
-% J = padarray(J,[p1,p2]);
-% J = imresize(J,[256,256]);
+J = imcrop(I);
+[c,d] = size(J);
+p1 = floor((a-c)/2);
+p2 = floor((b-d)/2);
+J = padarray(J,[p1,p2]);
+J = imresize(J,[256,256]);
 
-% subplot(2,2,2)
-% imshow(J)
+subplot(2,2,2)
+imshow(J)
 %change the rotation angle of the second image here 
-Orig_theta = 17;
+Orig_theta = 37;
 %create the second image
-J = imrotate(I,Orig_theta,'bicubic','loose');
-% J = imrotate(J,Orig_theta,'bicubic','loose');
+%J = imrotate(I,Orig_theta,'bicubic','loose');
+J = imrotate(J,Orig_theta,'bicubic','loose');
 %J = imtranslate(J,[40, 40]);
 
 %preprocessing of the daata
@@ -25,25 +25,25 @@ J = im2double(J);
 [a,b] = size(I)
 [co,do] = size(J)
 J = imresize(J,a/co);
-J = imtranslate(J,[20, 60]);
+J = imtranslate(J,[50, 50]);
 [c,d] = size(J);
 imwrite(J,'len_rotated.png')
 % subplot(2,3,1)
 % imshow(I)
-subplot(2,3,2)
-imshow(J)
-% subplot(2,2,2)
+% subplot(2,3,2)
 % imshow(J)
-% title('Image 2 , disoriented')
+subplot(2,2,2)
+imshow(J)
+title('Image 2 , disoriented')
 
 
 I(85:200,80:200) = 0;
-subplot(2,3,1)
-imshow(I)
-% subplot(2,2,1)
+% subplot(2,3,1)
 % imshow(I)
-% imwrite(I,'lena_occluded.png')
-% title('Image 1, Occluded')
+subplot(2,2,1)
+imshow(I)
+imwrite(I,'lena_occluded.png')
+title('Image 1, Occluded')
 
 
 
@@ -80,8 +80,8 @@ ir = abs(ifft2(phase2 .* conj(phase1) ./ r0));
 angle = 360 * (I_col-1)/ydim
 
 rec_I = imrotate(J,angle,'bicubic','loose');
-subplot(2,3,3)
-imshow(rec_I)
+% subplot(2,3,3)
+% imshow(rec_I)
 
 rec_Im = imresize(rec_I,co/a);
 [g,h] = size(rec_Im);
@@ -95,8 +95,8 @@ end
 size(rec_Im)
 shift1+a*co/a
 rec_I_matched = rec_Im(shift1:shift1+a*co/a-1,shift2:shift2+b*co/a-1);
-subplot(2,3,4)
-imshow(rec_I_matched)
+% subplot(2,3,4)
+% imshow(rec_I_matched)
 imwrite(rec_I_matched,'obtained.png')
 [aa,bb] = size(rec_I_matched);
 
@@ -104,7 +104,13 @@ pad1 = ceil((aa-a)/2);
 pad2 = ceil((bb-b)/2);
 
 original_padded = padarray(I,[pad1,pad2]);
-subplot(2,3,6)
-imshow(original_padded)
+% subplot(2,3,6)
+% imshow(original_padded)
 
-translation(original_padded)
+% h,v= correct_translation(I,rec_I_matched);
+% 
+% shift_I = imtranslate(rec_I_matched,[-1*h,-1*v]);
+% subplot(2,3,4)
+% imshow(shift_I)
+
+translation_interactive(original_padded)
