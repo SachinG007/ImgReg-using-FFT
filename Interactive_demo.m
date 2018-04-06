@@ -1,7 +1,9 @@
 %implementation of 1996 bs reddy and chatterjee paper
 %ref fig1 on the paper to better understand the code modules
 
-I = imread('lena.bmp');
+I = imread('Images/lena_crop.png');
+I = rgb2gray(I);
+I = imresize(I,[256,256]);
 [a,b] = size(I);
 J = imcrop(I);
 [c,d] = size(J);
@@ -28,7 +30,7 @@ J = im2double(J);
 [a,b] = size(I)
 [co,do] = size(J)
 J = imresize(J,a/co);
-J = imtranslate(J,[50, 50]);
+J = imtranslate(J,[20, 30]);
 [c,d] = size(J);
 imwrite(J,'len_rotated.png')
 % subplot(2,3,1)
@@ -37,6 +39,7 @@ imwrite(J,'len_rotated.png')
 % imshow(J)
 subplot(2,2,2)
 imshow(J)
+imwrite(J,'im2.png')
 title('Image 2 , disoriented')
 
 
@@ -45,7 +48,7 @@ I(85:200,80:200) = 0;
 % imshow(I)
 subplot(2,2,1)
 imshow(I)
-imwrite(I,'lena_occluded.png')
+imwrite(I,'im1.png')
 title('Image 1, Occluded')
 
 
@@ -81,6 +84,10 @@ ir = abs(ifft2(phase2 .* conj(phase1) ./ r0));
 [I_row, I_col] = ind2sub(size(ir),idx);
 [xdim,ydim] = size(ir);
 angle = 360 * (I_col-1)/ydim
+
+if angle<200
+    angle = angle+360
+end
 
 rec_I = imrotate(J,angle,'bicubic','loose');
 % subplot(2,3,3)

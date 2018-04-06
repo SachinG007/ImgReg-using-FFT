@@ -70,6 +70,7 @@ shift_I = imtranslate(J,[dh*trans_horizontal,dv*trans_vertical]);
 % imshow(shift_I)
 subplot(2,2,3)
 imshow(shift_I)
+imwrite(shift_I,'im3.png')
 title('result 1, Image oriented using FFT')
 
 if size(shift_I) == size(I)
@@ -91,6 +92,7 @@ end
 count
 subplot(2,2,4)
 imshow(I)
+imwrite(I,'im4.png')
 title('result 2, information gained from image2')
 
 
