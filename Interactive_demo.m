@@ -1,11 +1,14 @@
 %implementation of 1996 bs reddy and chatterjee paper
 %ref fig1 on the paper to better understand the code modules
-
-I = imread('Images/lena_crop.png');
+I = imread('liberty1.png');
 I = rgb2gray(I);
 I = imresize(I,[256,256]);
 [a,b] = size(I);
-J = imcrop(I);
+
+J = imread('liberty2.png');
+J = rgb2gray(J);
+J = imresize(J,[256,256]);
+J = imcrop(J);
 [c,d] = size(J);
 p1 = floor((a-c)/2);
 p2 = floor((b-d)/2);
@@ -18,7 +21,7 @@ imshow(J)
 prompt = 'With angle u want to distort ';
 Orig_theta = input(prompt);
 %Orig_theta = 37;
-
+%%
 %create the second image
 %J = imrotate(I,Orig_theta,'bicubic','loose');
 J = imrotate(J,Orig_theta,'bicubic','loose');
@@ -30,7 +33,7 @@ J = im2double(J);
 [a,b] = size(I)
 [co,do] = size(J)
 J = imresize(J,a/co);
-J = imtranslate(J,[20, 30]);
+%%J = imtranslate(J,[20, 30]);
 [c,d] = size(J);
 imwrite(J,'len_rotated.png')
 % subplot(2,3,1)
@@ -87,6 +90,10 @@ angle = 360 * (I_col-1)/ydim
 
 if angle<200
     angle = angle+360
+end
+
+if angle>360
+    angle = 360 - angle
 end
 
 rec_I = imrotate(J,angle,'bicubic','loose');
